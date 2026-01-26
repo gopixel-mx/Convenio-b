@@ -1,0 +1,138 @@
+@host = http://localhost:3026
+@contentType = application/json
+@api_key = c9754e70-a265-4363-97c7-3b7322fe4490
+
+### Login
+# @name login
+POST {{host}}/login
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+
+{
+	"mail": "uriel.aguilera@tecmm.edu.mx",
+	"pass": "pqn1fy0it9"
+}
+
+### Get me
+@token = {{login.response.body.token}}
+
+### Obtener estados
+POST {{host}}/organizacion
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+{
+	"rfc": "AYUDAMEYISUS",
+	"nombre_Legal": "Chupones de mangera A.C.",
+    "nombre_Comercial": "Chupones de mangera A.C.",
+    "nombre_Titular": "Don Chupon",
+    "puesto_Titular": "Jefe de Jefes",
+    "numero_Escritura": "123456789",
+    "nombre_Notario": "Hermano de Don Chupon",
+    "numero_Notaria": "123789456",
+    "municipio_Notaria": "ALAMBRADOS",
+    "actividades": "Elaboración de chupones de manguera",
+    "domicilio_Calle": "Asereje aja deje 789",
+    "domicilio_Estado": "Chihuahua",
+    "domicilio_Municipio": "Chihuahua",
+    "domicilio_CP": "45089",
+    "contacto_Telefono": "3315752741",
+    "contacto_Email": "chupones@manguera.com",
+    "oficio_Nombramiento": "aaaaaaaaaa",
+    "fecha_Nombramiento": "2025-06-09",
+    "ine_Representante": "14848sxjnx578",
+    "acta_constitutiva": "qs84xwjbwkjubw",
+    "tipo": "Empresa",
+	"testigos": [
+		"GASPAR DEL BARRIO",
+		"PELUZIN",
+		"EL ABUELO"
+	]
+}
+
+### procesar archivos
+POST {{host}}/organizacion/archivo
+Content-Type: multipart/form-data; boundary=MyBoundary
+
+--MyBoundary
+Content-Disposition: form-data; name="document"; filename="document.docx"
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+
+< ./Documento.docx
+--MyBoundary--
+
+### obtener documento html de Empresa
+POST {{host}}/convenios/empresa
+Content-Type: {{contentType}}
+
+{
+    "nombre": "uripunkas",
+    "nombre_unidad": "Zapopan",
+    "nombre_empresa": "Chupones de mangera A.C.",
+    "nombre_jefe": "HUGOD",
+    "puesto": "Jefe de Jefes",
+    "nombre_comercial": "Chupones de Manguera",
+    "nombre_director": "Don Chupon",
+    "acuerdo": "SXAL/0484/56549",
+    "fecha": "Lunes 4 de Diciembre del 2025",
+    "domicilio": "BLVD de los chupones 1234, Chupones, Jalisco",
+    "telefono": "3315752741",
+    "mail": "chupones@manguera.com",
+    "numero_Escritura": "158484845",
+    "fecha_nombramiento": "Lunes 4 de Diciembre del 2025",
+    "nombre_notario": "Hermano de Don Xupon",
+    "numero_notaria": "87849965965",
+    "municipio_notaria": "Chupones",
+    "actividades": "Hacer chupones de manguera a nuestros clientes"
+}
+
+### obtener documento html de Dependencia
+POST {{host}}/convenios/dependencia
+Content-Type: {{contentType}}
+
+{
+    "nombre_persona": "uripunkas",
+    "persona": "uripunkas2",
+    "director": "el yisus tope",
+    "nombre_empresa": "Chupones de mangera A.C.",
+    "nombre_presidente": "Pablo 'El vampiro' Lemús",
+    "nombre_unidad": "chupones",
+    "domicilio": "AV. Los Chupones 789, Chupones, Jalisco",
+    "nombre_director": "Andresa Manuela Lopesa Obradora",
+    "mail": "lamerariata@chingonsote.uk",
+    "telefono": "6666666666",
+    "nombre_vinculacion": "Pancho Pantera",
+    "correo_vinculacion": "pancho.pantera@tecmm.edu.mx",
+    "telefono_vinculacion": "6666666667",
+    "fecha": "06-06-2006"
+}
+
+### obtener documento html de persona
+POST {{host}}/convenios/persona
+Content-Type: {{contentType}}
+
+{
+    "director": "Pablito Makabrito",
+    "unidad": "Chupones",
+    "nombre_persona": "Yun Papi",
+    "puesto": "peppa pines",
+    "comparecientes": "waka waka",
+    "RFC": "PUTOHUGO",
+    "ine": "PUTOYISUS",
+    "actividad": "ASEREJE AJE DEJE DEJEME TUBI NUBINOWA DUBIDUBI DU BI",
+    "numero_Escritura": "ASDFGHJKLQWERTYUIOP",
+    "domicilio": "BLVD. De La Verga 147852, Chupones, Jalisco",
+    "telefono": "6666666666",
+    "correo_vinculacion": "pancho.pantera@tecmm.edu.mx",
+    "municipio": "Chupones",
+    "fecha": "06-06-2006"
+}
+
+### obtener pdf
+POST {{host}}/convenios/pdf
+Content-Type: {{contentType}}
+
+{
+    "htmlContent": "<p>CONVENIO MARCO DE COLABORACI&Oacute;N Y VINCULACI&Oacute;N QUE CELEBRAN POR UNA PARTE EL INSTITUTO TECNOL&Oacute;GICO JOS&Eacute; MARIO MOLINA PASQUEL Y HENR&Iacute;QUEZ, REPRESENTADO EN ESTE ACTO POR <strong>uripunkas</strong>, EN SU CAR&Aacute;CTER DE <strong>DIRECTOR DE LA UNIDAD ACAD&Eacute;MICA DE Zapopan</strong>, QUE EN LO SUCESIVO SE DENOMINAR&Aacute; COMO EL <strong>&ldquo;TSJ&rdquo;,</strong> Y POR OTRA PARTE Chupones de mangera A.C.., REPRESENTADO EN ESTE ACTO POR HUGOD, EN SU CAR&Aacute;CTER Jefe de Jefes Y/ O REPRESENTANTE LEGAL, A QUI&Eacute;N EN LO SUCESIVO SE LE DENOMINAR&Aacute; Chupones de Manguera A LOS COMPARECIENTES EN CONJUNTO SE LES DENOMINAR&Aacute; COMO <strong>&ldquo;LAS PARTES&rdquo;</strong> QUIENES EN ESTE ACTO FORMALIZAN EL PRESENTE CONVENIO Y LO SUJETAN AL TENOR DE LAS SIGUIENTES DECLARACIONES Y CL&Aacute;USULAS:</p>"
+}

@@ -1,0 +1,46 @@
+@host = http://localhost:3026
+@contentType = application/json
+@api_key = c9754e70-a265-4363-97c7-3b7322fe4490
+
+### Login
+# @name login
+POST {{host}}/login
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+
+{
+	"mail": "uriel.aguilera@tecmm.edu.mx",
+	"pass": "pqn1fy0it9"
+}
+
+### Get me
+@token = {{login.response.body.token}}
+
+### obtener draft
+GET {{host}}/convenios/draft/0001
+
+###registrar convenio
+POST {{host}}/convenios/draft
+Content-Type: {{contentType}}
+
+{
+    "numero_convenio": "0001", 
+    "id_Creador_Cuenta": 11, 
+    "id_Unidad_Academica": 11, 
+    "tipo_Convenio": "Empresa",
+    "fecha_Inicio": "2025-10-29", 
+    "fecha_Fin": "3025-10-29"
+}
+
+### Obtener estados
+GET {{host}}/locacion/estados
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+
+### Obtener municipios
+GET {{host}}/locacion/municipios/12
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}

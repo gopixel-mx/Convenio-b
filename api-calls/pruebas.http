@@ -1,0 +1,27 @@
+@host = http://localhost:3026
+@contentType = application/json
+@api_key = c9754e70-a265-4363-97c7-3b7322fe4490
+
+### Obtener la lista de usuarios
+GET http://localhost:3026/convenios/draft/0001
+Accept: application/json
+
+### Login
+# @name login
+POST {{host}}/login
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+
+{
+	"mail": "uriel.aguilera@tecmm.edu.mx",
+	"pass": "pqn1fy0it9"
+}
+
+### Get me
+@token = {{login.response.body.token}}
+
+### obtener cuenta
+GET {{host}}/cuenta/2
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}

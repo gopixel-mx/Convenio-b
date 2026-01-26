@@ -1,0 +1,89 @@
+@host = http://localhost:3026
+@contentType = application/json
+@api_key = c9754e70-a265-4363-97c7-3b7322fe4490
+
+### Login
+# @name login
+POST {{host}}/login
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+
+{
+	"mail": "uriel.aguilera@tecmm.edu.mx",
+	"pass": "pqn1fy0it9"
+}
+
+### Get token
+@token = {{login.response.body.token}}
+
+### Crear notificación
+POST {{host}}/notificaciones
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+{
+    "cuenta_Receptor": 20,
+    "cuenta_Emisora": 22,
+    "titulo": "Nueva solicitud de convenio",
+    "tipo": "sistema",
+    "contenido": "Se ha recibido una nueva solicitud de convenio que requiere su revisión"
+}
+
+### Obtener todas las notificaciones
+GET {{host}}/notificaciones?page=1&limit=10
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+### Obtener notificaciones filtradas por receptor
+GET {{host}}/notificaciones?cuenta_Receptor=20&page=1&limit=10
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+### Obtener notificaciones no entregadas
+GET {{host}}/notificaciones?entregado=false&cuenta_Receptor=20
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+### Obtener notificaciones de un usuario específico
+GET {{host}}/notificaciones/usuario/11?page=1&limit=10
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+### Obtener notificaciones no entregadas de un usuario
+GET {{host}}/notificaciones/usuario/11?entregado=false
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+### Obtener una notificación por ID
+GET {{host}}/notificaciones/1
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+### Marcar una notificación como entregada
+PATCH {{host}}/notificaciones/1/entregada
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+### Marcar varias notificaciones como entregadas
+PATCH {{host}}/notificaciones/entregadas
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
+
+{
+    "ids": [1, 2, 3, 4, 5]
+}
+
+### Eliminar una notificación
+DELETE {{host}}/notificaciones/1
+Content-Type: {{contentType}}
+api_key: {{api_key}}
+Authorization: Bearer {{token}}
